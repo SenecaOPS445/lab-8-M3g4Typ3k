@@ -1,0 +1,77 @@
+---
+- hosts: jtuma
+  user: student
+  become: yes
+
+  tasks:
+
+    - name: update apache
+      yum:
+        name: httpd
+        state: latest  
+
+    - name: restart apache
+      service: 
+        name: httpd
+        state: restarted
+
+    - name: install epel-release
+      yum:
+        name: epel-release
+        state: installed
+
+    - name: remove tree package
+      yum:
+        name: tree
+        state: removed
+
+    - name: set hostname to Seneca username
+      hostname:
+        name: jtuma
+
+    - name: create Seneca username with sudo access
+      user:
+        name: jtuma
+        groups: wheel
+        append: yes
+
+    - name: ensure .ssh directory exists for jtuma
+      file:
+        path: /home/jtuma/.ssh
+        state: directory
+        owner: jtuma
+        group: jtuma
+        mode: 0700
+
+    - name: copy authorized_keys file to user's home directory
+      copy:
+        src: /home/student/.ssh/authorized_keys
+        dest: /home/jtuma/.ssh/authorized_keys
+        remote_src: yes
+        owner: jtuma
+        group: jtuma
+        mode: 0600
+
+    - name: allow Seneca username to sudo without password
+      copy:
+        dest: /etc/sudoers.d/jtuma
+        content: "jtuma ALL=(ALL) NOPASSWD: ALL\n"
+        mode: 0440
+
+    - name: loop to create multiple a directory structure in user's home directory
+      file:
+        path: /home/jtuma/ops445/{{ item }}
+        state: directory
+        owner: jtuma
+        group: jtuma
+        mode: 0775
+        
+      with_items:
+        - lab1
+        - lab2
+        - lab3
+        - lab4
+        - lab5
+        - lab6
+        - lab7
+        - lab8
