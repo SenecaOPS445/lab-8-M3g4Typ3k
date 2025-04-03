@@ -1,0 +1,46 @@
+
+PLAY [jtuma] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [jtuma]
+
+TASK [update apache] ***********************************************************
+ok: [jtuma]
+
+TASK [restart apache] **********************************************************
+changed: [jtuma]
+
+TASK [install epel-release] ****************************************************
+ok: [jtuma]
+
+TASK [remove tree package] *****************************************************
+ok: [jtuma]
+
+TASK [set hostname to Seneca username] *****************************************
+ok: [jtuma]
+
+TASK [create Seneca username with sudo access] *********************************
+changed: [jtuma]
+
+TASK [ensure .ssh directory exists for jtuma] **********************************
+changed: [jtuma]
+
+TASK [copy authorized_keys file to user's home directory] **********************
+changed: [jtuma]
+
+TASK [allow Seneca username to sudo without password] **************************
+changed: [jtuma]
+
+TASK [loop to create multiple a directory structure in user's home directory] ***
+changed: [jtuma] => (item=lab1)
+changed: [jtuma] => (item=lab2)
+changed: [jtuma] => (item=lab3)
+changed: [jtuma] => (item=lab4)
+changed: [jtuma] => (item=lab5)
+changed: [jtuma] => (item=lab6)
+changed: [jtuma] => (item=lab7)
+changed: [jtuma] => (item=lab8)
+
+PLAY RECAP *********************************************************************
+jtuma                      : ok=11   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
